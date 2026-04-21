@@ -89,10 +89,13 @@ public static class RerollingNeowMod
             var modifiers = currentState.Modifiers.ToList() as IReadOnlyList<ModifierModel>;
             Log.Write($"Captured: A{ascensionLevel} mode={gameMode}");
 
-            // 2. Return to main menu — the game properly tears down the run,
-            //    cleans up all scenes/nodes, and transitions back to menu state.
-            await NGame.Instance.ReturnToMainMenu();
-            Log.Write("Returned to main menu");
+            // 2. Tear down the current run directly (without going through
+            //    main menu, which would start menu BGM).
+            runManager.ActionQueueSet.Reset();
+            NRunMusicController.Instance?.StopMusic();
+            await NGame.Instance.Transition.FadeOut();
+            runManager.CleanUp();
+            Log.Write("Current run torn down");
 
             // 3. Delete old run save so it doesn't linger.
             try
@@ -106,7 +109,6 @@ public static class RerollingNeowMod
             }
 
             // 4. Start a brand new run with a fresh random seed.
-            //    This is the same path the main menu's "New Run" button uses.
             var newSeed = new System.Random().Next(1, 999999999).ToString();
             Log.Write($"Starting new run with seed: {newSeed}");
 
@@ -118,6 +120,8 @@ public static class RerollingNeowMod
         catch (Exception ex)
         {
             Log.Write($"Reroll error: {ex.Message}\n{ex.StackTrace}");
+            try { await NGame.Instance.Transition.FadeIn(); }
+            catch { }
         }
         finally
         {
