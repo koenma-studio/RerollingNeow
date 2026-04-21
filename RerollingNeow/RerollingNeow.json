@@ -1,0 +1,11 @@
+{
+    "id": "RerollingNeow",
+    "name": "Rerolling Neow",
+    "author": "delight7890",
+    "description": "Press F6 to abandon the current run and start a new run with a fresh random seed, landing directly on the Neow screen.",
+    "version": "1.0.0",
+    "has_pck": true,
+    "has_dll": true,
+    "dependencies": [],
+    "affects_gameplay": true
+}
