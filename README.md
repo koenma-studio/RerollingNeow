@@ -1,5 +1,9 @@
 # Rerolling Neow
 
+<p align="center">
+  <img src="images/neow.png" alt="Neow" width="600">
+</p>
+
 **Slay the Spire 2 Mod** — Press **F4** to instantly start a new run with a fresh seed.
 
 [한국어](#한국어) | [English](#english) | [简体中文](#简体中文) | [繁體中文](#繁體中文) | [日本語](#日本語)
